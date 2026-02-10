@@ -14,9 +14,20 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('email')->nullable();
+            $table->string('avatar')->nullable();
+
+            // Social auth
+            $table->enum('provider', ['google', 'facebook']);
+            $table->string('provider_id');   // social ID
+
+            // Location
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
+
+            // Status
+            $table->boolean('is_active')->default(1);
+
             $table->rememberToken();
             $table->timestamps();
         });
