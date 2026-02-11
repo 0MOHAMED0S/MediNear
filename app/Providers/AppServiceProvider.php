@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\Eloquent\PharmacyApplicationRepository;
 use App\Repositories\Eloquent\UserRepository;
+use App\Repositories\Interfaces\PharmacyApplicationRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
@@ -13,7 +15,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(UserRepositoryInterface::class,
+         UserRepository::class);
+        $this->app->bind(PharmacyApplicationRepositoryInterface::class, 
+        PharmacyApplicationRepository::class);
     }
 
     /**
