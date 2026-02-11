@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories\Eloquent;
+
 use App\Repositories\Interfaces\PharmacyApplicationRepositoryInterface;
 use App\Models\PharmacyApplication;
 
@@ -21,5 +22,12 @@ class PharmacyApplicationRepository implements PharmacyApplicationRepositoryInte
         return PharmacyApplication::where('id', $id)
             ->where('user_id', $userId)
             ->first();
+    }
+
+    public function getByUser(int $userId)
+    {
+        return PharmacyApplication::where('user_id', $userId)
+            ->latest()
+            ->get();
     }
 }
