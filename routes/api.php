@@ -17,7 +17,7 @@ Route::post('auth/facebook', [SocialAuthController::class, 'facebook']);
         Route::post('/auth/logout', [SocialAuthController::class, 'logout']);
         
         Route::post('/pharmacy-application/store', [PharmacyApplicationController::class, 'store']);
-        Route::get('/pharmacy-application/show', [PharmacyApplicationController::class, 'show']);
+        Route::get('/pharmacy-application/show/{id}', [PharmacyApplicationController::class, 'show']);
 });
 
 Route::middleware(['auth:sanctum', 'role:user'])->group(function () {});
