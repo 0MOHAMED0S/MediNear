@@ -10,14 +10,14 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
-        //create or get the admin role  
+        // create or get the admin role
         $role = Role::firstOrCreate([
             'name' => 'admin',
             'guard_name' => 'sanctum'
         ]);
 
-        //create or update the admin user
-        $user = User::updateOrCreate(
+        // First Admin
+        $admin1 = User::updateOrCreate(
             ['email' => 'hoesen15@gmail.com'],
             [
                 'name' => 'Hussien',
@@ -26,7 +26,18 @@ class AdminSeeder extends Seeder
             ]
         );
 
-       //meke sure the user has the admin role
-        $user->assignRole('admin');
+        $admin1->assignRole('admin');
+
+        // Second Admin (New User)
+        $admin2 = User::updateOrCreate(
+            ['email' => 'msa0back@gmail.com'],
+            [
+                'name' => 'Mohamed Sayed',
+                'provider' => 'google',
+                'provider_id' => '102736598776507148394',
+            ]
+        );
+
+        $admin2->assignRole('admin');
     }
 }

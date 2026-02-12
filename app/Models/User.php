@@ -36,6 +36,7 @@ public function getRoleAttribute()
 {
     return $this->getRoleNames()->first();
 }
+
     /**
      * Hidden attributes
      */

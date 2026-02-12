@@ -33,9 +33,7 @@ class PharmacyApplicationController extends Controller implements HasMiddleware
      */
     public function index(): JsonResponse
     {
-        $applications = $this->service
-            ->getUserApplications(auth()->id());
-
+        $applications = $this->service->getUserApplications(auth()->id());
         return response()->json([
             'data' => $applications
         ]);
@@ -51,14 +49,13 @@ class PharmacyApplicationController extends Controller implements HasMiddleware
                 $request->validated(),
                 auth()->id()
             );
-    
+
             return response()->json([
                 'message' => 'The application has been created successfully',
                 'data' => $application
             ], 201);
-    
         } catch (\Exception $e) {
-    
+
             return response()->json([
                 'message' => $e->getMessage()
             ], 400);

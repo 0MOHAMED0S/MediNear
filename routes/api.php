@@ -12,29 +12,23 @@ Route::get('/user', function (Request $request) {
 
 
 Route::post('auth/google', [SocialAuthController::class, 'google']);
-Route::post('auth/facebook', [SocialAuthController::class, 'facebook']);
-    
+    Route::post('auth/facebook', [SocialAuthController::class, 'facebook']);
     Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/auth/logout', [SocialAuthController::class, 'logout']);
-        
-        // Route::get('/pharmacy-application/show-all-requests', [PharmacyApplicationController::class, 'index']);      // Show all requests of the authenticated user
-        // Route::post('/pharmacy-application/create', [PharmacyApplicationController::class, 'store']);     // create new request
-        // Route::get('/pharmacy-application/show/{id}', [PharmacyApplicationController::class, 'show']);   // show specific request details
-        // Route::delete('/pharmacy-application/delete/{id}', [PharmacyApplicationController::class, 'destroy']); 
+    Route::post('/auth/logout', [SocialAuthController::class, 'logout']);
 });
 
 
-Route::middleware('auth:sanctum')->prefix('pharmacy-application')->group(function () {
-
-        Route::get('/show-all-requests', [PharmacyApplicationController::class, 'index']);     // GET all
-        Route::post('/create', [PharmacyApplicationController::class, 'store']);    // POST create
-        Route::get('/show/{id}', [PharmacyApplicationController::class, 'show']);  // GET one
-        Route::delete('/delete/{id}', [PharmacyApplicationController::class, 'destroy']); // DELETE
+Route::middleware(['auth:sanctum', 'role:pharmacy'])->prefix('pharmacy-application')->group(function () {
+    Route::post('/create', [PharmacyApplicationController::class, 'store']);
+    Route::get('/show/{id}', [PharmacyApplicationController::class, 'show']);
+    Route::delete('/delete/{id}', [PharmacyApplicationController::class, 'destroy']);
 });
 
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
-        Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/show-all-applications', [PharmacyApplicationController::class, 'index']);
 });
 
-Route::middleware(['auth:sanctum', 'role:user'])->group(function () {});
-Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {});
+Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
+
+});
