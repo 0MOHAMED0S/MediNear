@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Pharmacy;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PharmacyApplicationRequest;
-use App\Repositories\Interfaces\PharmacyApplicationRepositoryInterface;
+use App\Services\Pharmacy\PharmacyApplicationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
 class PharmacyApplicationController extends Controller implements HasMiddleware
 {
-    protected PharmacyApplicationRepositoryInterface $repository;
+    protected PharmacyApplicationService $service;
 
-    public function __construct(PharmacyApplicationRepositoryInterface $repository)
+    public function __construct(PharmacyApplicationService $service)
     {
-        $this->repository = $repository;
+        $this->service = $service;
     }
 
     /**
@@ -33,10 +33,8 @@ class PharmacyApplicationController extends Controller implements HasMiddleware
      */
     public function index(): JsonResponse
     {
-        $applications = auth()->user()
-            ->pharmacyApplications()
-            ->latest()
-            ->get();
+        $applications = $this->service
+            ->getUserApplications(auth()->id());
 
         return response()->json([
             'data' => $applications
@@ -48,25 +46,32 @@ class PharmacyApplicationController extends Controller implements HasMiddleware
      */
     public function store(PharmacyApplicationRequest $request): JsonResponse
     {
-        $data = $request->validated();
-        $data['user_id'] = auth()->id();
-        $data['status'] = 'pending';
-
-        $application = $this->repository->create($data);
-
-        return response()->json([
-            'message' => 'The application has been created successfully',
-            'data' => $application
-        ], 201);
+        try {
+            $application = $this->service->createApplication(
+                $request->validated(),
+                auth()->id()
+            );
+    
+            return response()->json([
+                'message' => 'The application has been created successfully',
+                'data' => $application
+            ], 201);
+    
+        } catch (\Exception $e) {
+    
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 
     /**
      * Show a specific pharmacy application of the authenticated user
      */
-    public function show($id): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        $application = $this->repository
-            ->findUserApplication($id, auth()->id());
+        $application = $this->service
+            ->getUserApplication($id, auth()->id());
 
         if (!$application) {
             return response()->json([
@@ -82,18 +87,16 @@ class PharmacyApplicationController extends Controller implements HasMiddleware
     /**
      * Delete a pharmacy application
      */
-    public function destroy($id): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
-        $application = $this->repository
-            ->findUserApplication($id, auth()->id());
+        $deleted = $this->service
+            ->deleteApplication($id, auth()->id());
 
-        if (!$application) {
+        if (!$deleted) {
             return response()->json([
                 'message' => 'Application not found'
             ], 404);
         }
-
-        $application->delete();
 
         return response()->json([
             'message' => 'The application has been deleted successfully'

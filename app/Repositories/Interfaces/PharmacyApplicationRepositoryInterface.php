@@ -2,11 +2,14 @@
 
 namespace App\Repositories\Interfaces;
 
-use App\Models\User;
-
 interface PharmacyApplicationRepositoryInterface
 {
     public function create(array $data);
-    public function findById(int $Id);
-    public function finduserapplication(int $Id, int $userId);
+
+    public function findById(int $id);
+
+    public function findUserApplication(int $id, int $userId);
+    public function getAll();
+    public function hasPendingApplication(int $userId);
+    public function getByUser(int $userId);
 }
