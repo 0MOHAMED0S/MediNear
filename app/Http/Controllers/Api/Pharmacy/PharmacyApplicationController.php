@@ -46,15 +46,23 @@ class PharmacyApplicationController extends Controller implements HasMiddleware
      */
     public function store(PharmacyApplicationRequest $request): JsonResponse
     {
-        $application = $this->service->createApplication(
-            $request->validated(),
-            auth()->id()
-        );
-
-        return response()->json([
-            'message' => 'The application has been created successfully',
-            'data' => $application
-        ], 201);
+        try {
+            $application = $this->service->createApplication(
+                $request->validated(),
+                auth()->id()
+            );
+    
+            return response()->json([
+                'message' => 'The application has been created successfully',
+                'data' => $application
+            ], 201);
+    
+        } catch (\Exception $e) {
+    
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 
     /**

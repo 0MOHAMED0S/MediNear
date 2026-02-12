@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Auth\SocialAuthController;
 use App\Http\Controllers\Api\Pharmacy\PharmacyApplicationController;
 use Illuminate\Http\Request;
@@ -24,10 +25,15 @@ Route::post('auth/facebook', [SocialAuthController::class, 'facebook']);
 
 
 Route::middleware('auth:sanctum')->prefix('pharmacy-application')->group(function () {
-        Route::get('/show-all-requests', [PharmacyApplicationController::class, 'index']);      // Show all requests of the authenticated user
-        Route::post('/create', [PharmacyApplicationController::class, 'store']);     // create new request
-        Route::get('/show/{id}', [PharmacyApplicationController::class, 'show']);   // show specific request details
-        Route::delete('/delete/{id}', [PharmacyApplicationController::class, 'destroy']); 
+
+        Route::get('/show-all-requests', [PharmacyApplicationController::class, 'index']);     // GET all
+        Route::post('/create', [PharmacyApplicationController::class, 'store']);    // POST create
+        Route::get('/show/{id}', [PharmacyApplicationController::class, 'show']);  // GET one
+        Route::delete('/delete/{id}', [PharmacyApplicationController::class, 'destroy']); // DELETE
+});
+
+Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
+        Route::get('/users', [UserController::class, 'index']);
 });
 
 Route::middleware(['auth:sanctum', 'role:user'])->group(function () {});

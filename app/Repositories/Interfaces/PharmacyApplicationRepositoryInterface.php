@@ -9,6 +9,7 @@ interface PharmacyApplicationRepositoryInterface
     public function findById(int $id);
 
     public function findUserApplication(int $id, int $userId);
-
+    public function getAll();
+    public function hasPendingApplication(int $userId);
     public function getByUser(int $userId);
 }
