@@ -1,0 +1,4 @@
+crud(create,update,delete,not_avtive)
+migration(name,image,descrip,stutes)
+index(get_all_categories)
+seedr(data_categories)

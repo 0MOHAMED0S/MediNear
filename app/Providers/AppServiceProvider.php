@@ -3,9 +3,12 @@
 namespace App\Providers;
 
 use App\Repositories\Eloquent\PharmacyApplicationRepository;
+use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Repositories\Eloquent\UserRepository;
+use App\Repositories\Eloquent\CategoryRepository;
 use App\Repositories\Interfaces\PharmacyApplicationRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
          UserRepository::class);
         $this->app->bind(PharmacyApplicationRepositoryInterface::class, 
         PharmacyApplicationRepository::class);
+        $this->app->bind(CategoryRepositoryInterface::class, 
+        CategoryRepository::class);
+
     }
 
     /**
