@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\Categories\CategoriesController;
+use App\Http\Controllers\Api\Admin\Pharmacies\PharmaciesController;
 use App\Http\Controllers\Api\Auth\SocialAuthController;
 use App\Http\Controllers\Api\Pharmacy\PharmacyApplicationController;
 use Illuminate\Http\Request;
@@ -20,7 +21,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 Route::middleware(['auth:sanctum', 'role:pharmacy'])->prefix('pharmacy-application')->group(function () {
-    Route::post('/create', [PharmacyApplicationController::class, 'store']);
     Route::get('/show/{id}', [PharmacyApplicationController::class, 'show']);
     Route::delete('/delete/{id}', [PharmacyApplicationController::class, 'destroy']);
 });
@@ -30,6 +30,8 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(functi
     Route::get('/show-all-applications', [PharmacyApplicationController::class, 'index']);
 });
 
+//route resource 
+
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin/categories')->group(function () { 
     Route::post('/create', [CategoriesController::class, 'create']);
     Route::put('/update/{id}', [CategoriesController::class, 'update']);
@@ -38,6 +40,15 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin/categories')->g
 });
 
 
-Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
+//pharmacies
+Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin/pharmacies')->group(function () { 
+    Route::get('/show-all', [PharmaciesController::class, 'index']);
+    Route::post('/approve/{id}', [PharmaciesController::class, 'approve']);
+    Route::post('/reject/{id}', [PharmaciesController::class, 'reject']);
+});
 
+Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
+        Route::post('/pharmacy-application/create', [PharmacyApplicationController::class, 'store']);
+
+    
 });

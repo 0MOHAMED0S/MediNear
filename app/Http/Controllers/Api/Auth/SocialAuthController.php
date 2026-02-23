@@ -7,7 +7,9 @@ use App\Http\Requests\SocialAuthRequest;
 use App\Services\Auth\SocialAuthService;
 use App\Traits\ApiResponseTrait;
 use OpenApi\Annotations as OA;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\request;
+// use Symfony\Component\HttpFoundation\Request;
+
 
 class SocialAuthController extends Controller
 {
