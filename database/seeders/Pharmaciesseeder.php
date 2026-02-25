@@ -9,7 +9,7 @@ use App\Models\PharmacyApplication;
 use App\Repositories\Eloquent\PharmacyApplicationRepository;
 use App\Repositories\Eloquent\PharmaciesRepository;
 
-class Pharmacies extends Seeder
+class Pharmaciesseeder extends Seeder
 {
     /**
      * Run the database seeds.
