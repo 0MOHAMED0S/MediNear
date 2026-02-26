@@ -27,6 +27,33 @@ public function create(Request $request, CategoriesService $service) {
         }
 }
 
+
+// get all category
+public function index(CategoriesService $service) {
+    try {
+        $categories = $service->getAllCategories();
+        return response()->json($categories);
+        } 
+    catch (\Exception $e) {
+        return response()->json(['error' => 'Failed to fetch categories'], 500);
+        }
+}
+
+
+// get single category public function show(string $id) { }
+public function show(string $id, CategoriesService $service) {
+    try {
+        $category = $service->getCategoryById($id);
+        return response()->json($category);
+        } 
+    catch (\Exception $e) {
+        return response()->json(['error' => 'Failed to fetch category'], 500);
+        }
+}
+
+
+
+
 // update category
 // try and catch
 public function update(Request $request, CategoriesService $service, $id) {

@@ -24,6 +24,7 @@ class DeliveryRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'delivery_fee' => 'required|numeric|min:0',
             'status' => 'required|in:active,inactive',
         ];

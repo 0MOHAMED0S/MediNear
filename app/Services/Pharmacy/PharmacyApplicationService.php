@@ -27,6 +27,13 @@ class PharmacyApplicationService
      */
     public function createApplication(array $data, int $userId)
     {
+        //image upload 
+        if (isset($data['image'])) {
+            $image = $data['image'];
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images/pharmacy_applications'), $imageName);
+            $data['image'] = 'images/pharmacy_applications/' . $imageName;
+        }
         //  منع تكرار طلب Pending
         if ($this->repository->hasPendingApplication($userId)) {
             throw new Exception('You already have a pending application.');
