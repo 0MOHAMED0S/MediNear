@@ -10,7 +10,8 @@ use App\Repositories\Eloquent\CategoryRepository;
 use App\Repositories\Interfaces\PharmacyApplicationRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\Eloquent\PharmaciesRepository;
-
+use App\Repositories\Interfaces\MedicineRepositoryInterface;
+use App\Repositories\Eloquent\MedicineRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,16 +21,26 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(UserRepositoryInterface::class,
-         UserRepository::class);
-        $this->app->bind(PharmacyApplicationRepositoryInterface::class, 
-        PharmacyApplicationRepository::class);
-        $this->app->bind(CategoryRepositoryInterface::class, 
-        CategoryRepository::class);
-        $this->app->bind(PharmaciesRepositoryInterface::class,
-        PharmaciesRepository::class);
-        
-
+        $this->app->bind(
+            UserRepositoryInterface::class,
+            UserRepository::class
+        );
+        $this->app->bind(
+            PharmacyApplicationRepositoryInterface::class,
+            PharmacyApplicationRepository::class
+        );
+        $this->app->bind(
+            CategoryRepositoryInterface::class,
+            CategoryRepository::class
+        );
+        $this->app->bind(
+            PharmaciesRepositoryInterface::class,
+            PharmaciesRepository::class
+        );
+        $this->app->bind(
+            MedicineRepositoryInterface::class,
+            MedicineRepository::class
+        );
     }
 
     /**
