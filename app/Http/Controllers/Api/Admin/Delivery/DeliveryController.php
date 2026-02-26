@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Admin\Delivery;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DeliveryRequest;
-use App\Services\Delivery\DeliveryService;
+use App\Services\admin\Delivery\DeliveryService;
 use Illuminate\Http\Request;
 
 class DeliveryController extends Controller
@@ -73,6 +73,28 @@ class DeliveryController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error updating delivery',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // GET SINGLE
+    public function show(string $id)
+    {
+        try {
+            $delivery = $this->deliveryService->find($id);
+            if (!$delivery) {
+                return response()->json([
+                    'message' => 'Delivery not found'
+                ], 404);
+            }
+
+            return response()->json([
+                'data' => $delivery
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error fetching delivery',
                 'error' => $e->getMessage()
             ], 500);
         }

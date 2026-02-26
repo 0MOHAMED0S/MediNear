@@ -16,6 +16,23 @@ class PharmaciesRepository implements PharmaciesRepositoryInterface
     {
         return $this->model->create($data);
     }
+    public function delete(int $id)
+    {
+        $pharmacy = $this->findById($id);
+        if ($pharmacy) {
+            return $pharmacy->delete();
+        }
+        return false;
+    }
+    public function update(int $id, array $data)
+    {
+        $pharmacy = $this->findById($id);
+        if ($pharmacy) {
+            $pharmacy->update($data);
+            return $pharmacy;
+        }
+        return null;
+    }
 
     public function findById(int $id)
     {

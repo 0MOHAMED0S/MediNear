@@ -18,15 +18,35 @@ class CategoriesService
         return $this->repository->getAll();
     }
 
-    // create category
+    // get category by id
+    public function getCategoryById(int $id)
+    {
+        return $this->repository->findById($id);
+    }
+    
+    
+    // create category with image upload
     public function createCategory(array $data)
     {
+        if (isset($data['image'])) {
+            $image = $data['image'];
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images/categories'), $imageName);
+            $data['image'] = 'images/categories/' . $imageName;
+        }
         return $this->repository->create($data);
     }
 
-    // update category
+    
+    // update category with image upload
     public function updateCategory(int $id, array $data)
     {
+        if (isset($data['image'])) {
+            $image = $data['image'];
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images/categories'), $imageName);
+            $data['image'] = 'images/categories/' . $imageName;
+        }
         return $this->repository->update($id, $data);
     }
 
