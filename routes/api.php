@@ -22,9 +22,10 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
-Route::middleware(['auth:sanctum', 'role:pharmacy'])->prefix('pharmacy-application')->group(function () {
+Route::middleware(['auth:sanctum', 'role:user'])->prefix('pharmacy-application')->group(function () {
     Route::get('/show/{id}', [PharmacyApplicationController::class, 'show']);
     Route::delete('/delete/{id}', [PharmacyApplicationController::class, 'destroy']);
+    
 });
 
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
@@ -33,25 +34,14 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(functi
     Route::apiResource('medicines', MedicineController::class);
 });
 
-//route resource
-
-Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin/categories')->group(function () {
-    Route::post('/create', [CategoriesController::class, 'create']);
-    Route::put('/update/{id}', [CategoriesController::class, 'update']);
-    Route::delete('/delete/{id}', [CategoriesController::class, 'delete']);
-    Route::get('/not-active', [CategoriesController::class, 'notactive']);
-});
-
 //pharmacies
-Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin/pharmacies')->group(function () {
-    Route::get('/show-all', [PharmaciesController::class, 'index']);
-    Route::post('/approve/{id}', [PharmaciesController::class, 'approve']);
-    Route::post('/reject/{id}', [PharmaciesController::class, 'reject']);
-});
+//Categories
 //deliveries
-//Route::apiResource('', Controller::class);
+//Route::apiResource
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () { 
-Route::apiResource('deliveries', DeliveryController::class);
+    Route::apiResource('pharmacies', PharmaciesController::class);
+    Route::apiResource('categories', CategoriesController::class);
+    Route::apiResource('deliveries', DeliveryController::class);
 });
 
 

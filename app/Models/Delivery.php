@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Delivery extends Model
 {
     protected $table = 'delivery';
-     // name,email,delivery_fee,status
+     // name,email,delivery_fee,status,image
     protected $fillable = [
         'name',
         'email',
+        'image',
         'delivery_fee',
         'status',
     ];
