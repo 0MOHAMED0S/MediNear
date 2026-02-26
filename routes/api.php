@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\Categories\CategoriesController;
 use App\Http\Controllers\Api\Admin\Medicines\MedicineController;
 use App\Http\Controllers\Api\Admin\Pharmacies\PharmaciesController;
+use App\Http\Controllers\Api\Admin\Delivery\DeliveryController;
 use App\Http\Controllers\Api\Auth\SocialAuthController;
 use App\Http\Controllers\Api\Pharmacy\PharmacyApplicationController;
 use Illuminate\Http\Request;
@@ -47,6 +48,13 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin/pharmacies')->g
     Route::post('/approve/{id}', [PharmaciesController::class, 'approve']);
     Route::post('/reject/{id}', [PharmaciesController::class, 'reject']);
 });
+//deliveries
+//Route::apiResource('', Controller::class);
+Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () { 
+Route::apiResource('deliveries', DeliveryController::class);
+});
+
+
 
 Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
     Route::post('/pharmacy-application/create', [PharmacyApplicationController::class, 'store']);
