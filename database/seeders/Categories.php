@@ -14,26 +14,44 @@ class Categories extends Seeder
     public function run(): void
     {
 
-        $categories = [
+$categories = [
             [
-                'name' => 'Electronics',
-                'image' => 'electronics.jpg',
-                'description' => 'Devices and gadgets',
+                'name' => 'Pain Relief',
+                'image' => 'pain_relief.jpg',
+                'description' => 'Medicines for headache, muscle pain and fever',
                 'is_active' => true,
             ],
             [
-                'name' => 'Books',
-                'image' => 'books.jpg',
-                'description' => 'All kinds of books',
+                'name' => 'Antibiotics',
+                'image' => 'antibiotics.jpg',
+                'description' => 'Medicines used to treat bacterial infections',
                 'is_active' => true,
             ],
             [
-                'name' => 'Clothing',
-                'image' => 'clothing.jpg',
-                'description' => 'All kinds of clothing',
+                'name' => 'Vitamins & Supplements',
+                'image' => 'vitamins.jpg',
+                'description' => 'Vitamins, minerals and dietary supplements',
                 'is_active' => true,
             ],
-    ];
+            [
+                'name' => 'Baby Care',
+                'image' => 'baby_care.jpg',
+                'description' => 'Products for babies and infants',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Skin Care',
+                'image' => 'skin_care.jpg',
+                'description' => 'Creams, lotions and dermatological products',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Medical Equipment',
+                'image' => 'medical_equipment.jpg',
+                'description' => 'Devices like thermometers, blood pressure monitors, etc.',
+                'is_active' => true,
+            ],
+        ];
 
         foreach ($categories as $category) {
             \App\Models\Category::create($category);
