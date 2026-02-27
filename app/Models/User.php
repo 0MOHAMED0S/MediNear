@@ -20,22 +20,21 @@ class User extends Authenticatable
     /**
      * Mass assignable attributes
      */
-    protected $fillable = [
-        'name',
-         'avatar',
-        'email',
-        'provider',
-        'provider_id',
-        'latitude',
-        'longitude',
-        'is_active',
-    ];
-protected $appends = ['role'];
+protected $fillable = [
+    'name',
+    'avatar',
+    'email',
+    'provider',
+    'provider_id',
+    'latitude',
+    'longitude',
+    'is_active',
+];
 
-public function getRoleAttribute()
-{
-    return $this->getRoleNames()->first();
-}
+    // public function getRoleAttribute()
+    // {
+    //     return $this->getRoleNames()->first();
+    // }
 
     /**
      * Hidden attributes
