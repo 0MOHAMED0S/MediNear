@@ -10,7 +10,6 @@ use App\Repositories\Eloquent\DeliveryRepository;
 use App\Repositories\Interfaces\PharmaciesRepositoryInterface;
 use App\Repositories\Interfaces\PharmacyApplicationRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
-use App\Repositories\Eloquent\PharmaciesRepository;
 use App\Repositories\Interfaces\MedicineRepositoryInterface;
 use App\Repositories\Eloquent\MedicineRepository;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
