@@ -26,7 +26,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware(['auth:sanctum', 'role:user'])->prefix('pharmacy-application')->group(function () {
     Route::get('/show/{id}', [PharmacyApplicationController::class, 'show']);
     Route::delete('/delete/{id}', [PharmacyApplicationController::class, 'destroy']);
-
 });
 
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
@@ -41,6 +40,8 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(functi
 //Route::apiResource
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
     Route::apiResource('pharmacies', PharmaciesController::class);
+    Route::post('/pharmacies/approve/{id}', [PharmaciesController::class, 'approve']);
+
     Route::apiResource('categories', CategoriesController::class);
     Route::apiResource('deliveries', DeliveryController::class);
 });

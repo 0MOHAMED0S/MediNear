@@ -27,7 +27,7 @@ public function users()
         ])
         ->leftJoin('model_has_roles', function ($join) {
             $join->on('users.id', '=', 'model_has_roles.model_id')
-                 ->where('model_has_roles.model_type', User::class);
+                ->where('model_has_roles.model_type', User::class);
         })
         ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
         ->get();
@@ -36,9 +36,9 @@ public function users()
     /**
      * Pharmacies Dataset
      */
-    public function pharmacies(Request $request)
-    {
-        $query = PharmacyApplication::select([
+public function pharmacies(Request $request)
+{
+    $query = PharmacyApplication::select([
             'id',
             'user_id',
             'pharmacy_name',
@@ -48,21 +48,18 @@ public function users()
             'latitude',
             'longitude',
             'created_at'
+        ])
+        ->where('status', 'approved'); // 🔥 هنا الإجباري
+
+    if ($request->filled('from') && $request->filled('to')) {
+        $query->whereBetween('created_at', [
+            $request->from,
+            $request->to
         ]);
-
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        if ($request->filled('from') && $request->filled('to')) {
-            $query->whereBetween('created_at', [
-                $request->from,
-                $request->to
-            ]);
-        }
-
-        return response()->json($query->get());
     }
+
+    return response()->json($query->get());
+}
 
     /**
      * Medicines Dataset
