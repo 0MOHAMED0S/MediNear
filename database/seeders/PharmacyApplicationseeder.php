@@ -7,16 +7,12 @@ use App\Models\PharmacyApplication;
 use App\Models\User;
 use Carbon\Carbon;
 
-class PharmacyApplicationseeder extends Seeder
+class PharmacyApplicationSeeder extends Seeder
 {
     public function run(): void
     {
         // get a user with role user to associate with the pharmacy applications
-        $user = User::role('user')->first();
-
-        if (!$user) {
-            return;
-        }
+        $user = User::role('user')->firstOrFail(); // fail if not exists
 
         $applications = [
             [
