@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('pharmacies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pharmacy_application_id')->constrained('pharmacy_applications')->onDelete('cascade');
+            $table->foreignId('pharmacy_application_id')->constrained()->onDelete('cascade');
             $table->string('pharmacy_name');
             $table->string('owner_name');
             $table->string('phone_number');
             $table->string('address');
+            //location
             $table->decimal('latitude', 10, 7);
-            $table->decimal('longitude', 10, 7);
+            $table->decimal('longitude', 10, 7);    
             $table->string('license_number');
             $table->string('license_image');
             $table->string('commercial_number')->unique();
@@ -30,7 +31,6 @@ return new class extends Migration
             $table->boolean('is_24_hours')->default(false);
             $table->boolean('is_delivery')->default(false);
             $table->boolean('is_active')->default(true);
-            $table->string('rejection_reason')->nullable();
             $table->timestamps();
         });
     }

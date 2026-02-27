@@ -31,20 +31,23 @@ Route::middleware(['auth:sanctum', 'role:user'])->prefix('pharmacy-application')
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/show-all-applications', [PharmacyApplicationController::class, 'index']);
-    Route::apiResource('medicines', MedicineController::class);
+    Route::get('/categories/not-active', [CategoriesController::class, 'notactive']);
+    Route::post('pharmacies/approve/{id}', [PharmaciesController::class, 'approve']);
+    Route::post('pharmacies/reject/{id}', [PharmaciesController::class, 'reject']);
+    });
+    
+    //pharmacies
+    //Categories
+    //deliveries
+    //medicines
+    //Route::apiResource
+    Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () { 
+        Route::apiResource('pharmacies', PharmaciesController::class);
+        Route::apiResource('categories', CategoriesController::class);
+        Route::apiResource('deliveries', DeliveryController::class);
+        Route::apiResource('medicines', MedicineController::class);
 });
 
-//pharmacies
-//Categories
-//deliveries
-//Route::apiResource
-Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
-    Route::apiResource('pharmacies', PharmaciesController::class);
-    Route::post('/pharmacies/approve/{id}', [PharmaciesController::class, 'approve']);
-
-    Route::apiResource('categories', CategoriesController::class);
-    Route::apiResource('deliveries', DeliveryController::class);
-});
 
 
 

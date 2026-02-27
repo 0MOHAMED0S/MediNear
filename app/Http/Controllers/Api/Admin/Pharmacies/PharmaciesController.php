@@ -24,32 +24,31 @@ class PharmaciesController extends Controller
         ]);
     }
 
-    //     public function approve($id)
-    //     {
-    //         DB::beginTransaction();
+//     public function approve($id)
+//     {
+//         DB::beginTransaction();
 
-    //     //show single pharmacy application
-    //     public function show(string $id)
-    //     {
-    //         try {
-    //             $application = PharmacyApplication::findOrFail($id);
-    //             return response()->json([
-    //                 'data' => $application
-    //             ]);
-    //         } catch (\Exception $e) {
-    //             return response()->json([
-    //                 'message' => 'Error fetching pharmacy application',
-    //                 'error' => $e->getMessage()
-    //             ], 500);
-    //         }
-    //     }
-
-
-
-
-    public function approve($id)
+    //show single pharmacy application
+    public function show(string $id)
     {
-        DB::beginTransaction();
+        try {
+            $application = PharmacyApplication::findOrFail($id);
+            return response()->json([
+                'data' => $application
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error fetching pharmacy application',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    
+    
+
+public function approve($id)
+{
+    DB::beginTransaction();
 
         try {
             $application = PharmacyApplication::findOrFail($id);
