@@ -7,6 +7,7 @@ use App\Http\Requests\PharmaciesRequest;
 use App\Models\Pharmacy;
 use App\Models\PharmacyApplication;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 use Illuminate\Http\Request;
 
@@ -27,21 +28,21 @@ class PharmaciesController extends Controller
 //     {
 //         DB::beginTransaction();
 
-//     //show single pharmacy application
-//     public function show(string $id)
-//     {
-//         try {
-//             $application = PharmacyApplication::findOrFail($id);
-//             return response()->json([
-//                 'data' => $application
-//             ]);
-//         } catch (\Exception $e) {
-//             return response()->json([
-//                 'message' => 'Error fetching pharmacy application',
-//                 'error' => $e->getMessage()
-//             ], 500);
-//         }
-//     }
+    //show single pharmacy application
+    public function show(string $id)
+    {
+        try {
+            $application = PharmacyApplication::findOrFail($id);
+            return response()->json([
+                'data' => $application
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error fetching pharmacy application',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
     
     
 
@@ -58,6 +59,7 @@ public function approve($id)
                 ], 400);
             }
 
+            // 1️⃣ إنشاء Pharmacy
             Pharmacy::create([
                 'pharmacy_application_id' => $application->id,
                 'pharmacy_name' => $application->pharmacy_name,
@@ -78,9 +80,17 @@ public function approve($id)
                 'is_active' => true,
             ]);
 
+            // 2️⃣ تحديث حالة الطلب
             $application->update([
                 'status' => 'approved'
             ]);
+
+            // 3️⃣ تحديث دور المستخدم إلى pharmacy
+            $user = $application->user; // Assuming relation exists
+            if ($user) {
+                // إزالة أي أدوار سابقة (اختياري)
+                $user->syncRoles(['pharmacy']);
+            }
 
             DB::commit();
 

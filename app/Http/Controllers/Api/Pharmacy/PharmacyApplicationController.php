@@ -99,4 +99,6 @@ class PharmacyApplicationController extends Controller implements HasMiddleware
             'message' => 'The application has been deleted successfully'
         ]);
     }
+
+    
 }

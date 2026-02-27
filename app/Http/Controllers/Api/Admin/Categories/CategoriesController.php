@@ -15,7 +15,7 @@ class CategoriesController extends Controller
 // get all categories public function index() { } 
 // create category
 //try and catch
-public function create(Request $request, CategoriesService $service) {
+public function store(Request $request, CategoriesService $service) {
     $validatedData = $request->validate((new CategoriesRequest())->rules());
     try {
         $category = $service->createCategory($validatedData);
@@ -70,7 +70,7 @@ public function update(Request $request, CategoriesService $service, $id) {
 
 // delete category
 //try and catch
-public function delete(CategoriesService $service, $id) {
+public function destroy(CategoriesService $service, $id) {
     try {
         $service->deleteCategory($id);
         return response()->json(null, 204);
